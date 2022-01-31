@@ -4,6 +4,8 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Button from 'components/generics/Button';
 import Title from 'components/generics/Title';
 import { AppStateContext } from 'contexts/AppState';
+import ShoppingList from 'components/generics/ShoppingList';
+import Footer from './Footer/Footer';
 
 const MenuTab = () => {
   const { isSideMenuVisible, setIsSideMenuVisible } =
@@ -17,7 +19,7 @@ const MenuTab = () => {
     <AnimatePresence>
       {isSideMenuVisible && (
         <motion.div
-          className='h-screen w-4/6 absolute bg-gray-800 top-0 left-0 shadow-2xl rounded-r-lg'
+          className='flex flex-col h-screen w-4/6 absolute bg-gray-800 top-0 left-0 shadow-2xl rounded-r-lg'
           initial={{ x: '-100%', opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ type: 'tween', duration: 1 }}
@@ -29,9 +31,20 @@ const MenuTab = () => {
             iconClassName='text-white'
             onClick={handleCloseMenu}
           />
-          <Title className='text-white text-5xl relative top-16 ml-2'>
-            mShoper
-          </Title>
+          <Title className='text-white text-5xl mt-16 ml-2'>mShoper</Title>
+          {/* There will be a render of shopping lists */}
+          <div className='flex flex-wrap justify-center gap-5 h-full my-5 overflow-scroll'>
+            <ShoppingList />
+            <ShoppingList />
+            <ShoppingList />
+            <ShoppingList />
+            <ShoppingList />
+            <ShoppingList />
+            <ShoppingList />
+            <ShoppingList />
+            <ShoppingList />
+          </div>
+          <Footer />
         </motion.div>
       )}
     </AnimatePresence>

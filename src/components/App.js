@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import TopBar from './TopBar';
 import MenuTab from './MenuTab';
 import SettingsTab from './SettingsTab';
+import MainSection from './MainSection/MainSection';
 
 const App = () => {
   return (
@@ -9,6 +10,7 @@ const App = () => {
       <TopBar />
       <MenuTab />
       <SettingsTab />
+      <MainSection />
     </div>
   );
 };

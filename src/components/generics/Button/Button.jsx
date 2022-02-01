@@ -15,7 +15,7 @@ const Button = ({
 
   return (
     <button onClick={handleOnClick} disabled={disabled} className={className}>
-      {children}{' '}
+      {children}
       {icon && <FontAwesomeIcon icon={icon} className={iconClassName} />}
     </button>
   );

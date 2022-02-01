@@ -6,10 +6,13 @@ import Title from 'components/generics/Title';
 import { AppStateContext } from 'contexts/AppState';
 import ShoppingList from 'components/generics/ShoppingList';
 import Footer from './Footer/Footer';
+import { useClickAway } from 'hooks/useClickAway';
 
 const MenuTab = () => {
   const { isSideMenuVisible, setIsSideMenuVisible } =
     useContext(AppStateContext);
+
+  const ref = useClickAway(handleCloseMenu, isSideMenuVisible);
 
   function handleCloseMenu() {
     setIsSideMenuVisible(false);
@@ -19,10 +22,11 @@ const MenuTab = () => {
     <AnimatePresence>
       {isSideMenuVisible && (
         <motion.div
+          ref={ref}
           className='flex flex-col h-screen w-4/6 absolute bg-gray-800 top-0 left-0 shadow-2xl rounded-r-lg'
           initial={{ x: '-100%', opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ type: 'tween', duration: 1 }}
+          transition={{ type: 'tween', duration: 0.5 }}
           exit={{ x: '-100%', opacity: 0 }}
         >
           <Button

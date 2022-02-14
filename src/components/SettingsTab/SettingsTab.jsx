@@ -21,10 +21,10 @@ const SettingsTab = () => {
       {isSettingsMenuVisible && (
         <motion.div
           ref={ref}
-          className='flex justify-center items-end w-3/4 h-2/5 bg-gray-800 absolute top-0 right-0 shadow-2xl rounded-bl-lg'
+          className='flex justify-center items-end w-3/4 h-2/5 bg-gray-800 absolute z-10 top-0 right-0 shadow-2xl rounded-bl-lg'
           initial={{ y: '-100%', opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ type: 'tween', duration: 1 }}
+          transition={{ type: 'tween', duration: 0.5 }}
           exit={{ y: '-100%', opacity: 0 }}
         >
           <Button

@@ -25,6 +25,27 @@ const Item = ({ bought, miss, name, id }) => {
     setListOfMiss,
   } = useContext(AppStateContext);
 
+  // const managementOfProducts = () => {
+  //   const copy = listToBuy;
+  //   setListToBuy(
+  //     copy.filter((item) => {
+  //       moveItem(item);
+  //       removeItem(item);
+  //       return id !== item.id;
+  //     })
+  //   );
+  // };
+
+  // const moveItem = (item) => {
+  //   setListOfMiss([...listOfMiss, item]);
+  //   item.miss = true;
+  // };
+
+  // const removeItem = (item) => {
+  //   setListOfBoughts([...listOfBoughts, item]);
+  //   item.bought = true;
+  // };
+
   const removeItemFromBuyList = () => {
     const copy = listToBuy;
     setListToBuy(
@@ -36,7 +57,7 @@ const Item = ({ bought, miss, name, id }) => {
     );
   };
   const moveItemToMissList = () => {
-    const copy = listOfMiss;
+    const copy = listToBuy;
     setListToBuy(
       copy.filter((item) => {
         setListOfMiss([...listOfMiss, item]);

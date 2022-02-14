@@ -37,7 +37,7 @@ const MenuTab = () => {
       {isSideMenuVisible && (
         <motion.div
           ref={ref}
-          className='flex flex-col h-screen w-4/6 absolute bg-gray-800 top-0 left-0 shadow-2xl rounded-r-lg'
+          className='flex flex-col h-screen w-4/6 absolute z-10 bg-gray-800 top-0 left-0 shadow-2xl rounded-r-lg'
           initial={{ x: '-100%', opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ type: 'tween', duration: 0.5 }}

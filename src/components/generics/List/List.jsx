@@ -36,6 +36,7 @@ const List = ({ type }) => {
         miss={list.miss}
         bought={list.bought}
         name={item.name}
+
         // {...item}
       />
     ));

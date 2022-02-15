@@ -4,6 +4,8 @@ import TopBar from './TopBar';
 import MenuTab from './MenuTab';
 import SettingsTab from './SettingsTab';
 import MainSection from './MainSection/MainSection';
+
+//! Example
 const Abc = () => <h1>Nie ma list</h1>;
 
 const App = () => {
@@ -13,6 +15,7 @@ const App = () => {
       <MenuTab />
       <SettingsTab />
       <Routes>
+        {/* Refactor me */}
         <Route path='/' element={<Abc />} />
         <Route path='/:listUrl' element={<MainSection />} />
       </Routes>

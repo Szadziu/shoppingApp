@@ -10,6 +10,7 @@ import cn from 'classnames';
 import Button from '../Button';
 import { AnimatePresence, motion } from 'framer-motion';
 
+// ListItem rename
 const Item = ({ bought, miss, name, id }) => {
   const ItemClassnames = cn('w-4/5', {
     ['line-through']: bought,

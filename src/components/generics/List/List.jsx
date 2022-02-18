@@ -1,6 +1,6 @@
 import { AppStateContext } from 'contexts/AppState';
 import { useContext } from 'react';
-import Item from '../Item';
+import ListItem from '../ListItem';
 
 const List = ({ type }) => {
   const { listToBuy, listOfMiss, listOfBoughts } = useContext(AppStateContext);
@@ -31,7 +31,7 @@ const List = ({ type }) => {
 
   const renderList = () => {
     return list.type.map((item) => (
-      <Item
+      <ListItem
         id={item.id}
         miss={list.miss}
         bought={list.bought}

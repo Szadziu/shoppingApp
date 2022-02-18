@@ -12,7 +12,7 @@ const Button = ({
     e.preventDefault();
     onClick(e);
   };
-
+  // TODO: change styles (fixed position)
   return (
     <button onClick={handleOnClick} disabled={disabled} className={className}>
       {children}

@@ -50,10 +50,9 @@ const MenuTab = () => {
             onClick={handleCloseMenu}
           />
           <Title className='text-white text-5xl mt-16 ml-2'>mShoper</Title>
-          {/* There will be a render of shopping lists */}
           <div className='flex flex-wrap justify-center gap-5 h-full my-5 overflow-scroll'>
-            {data.data.map(({ name, listUrl }) => (
-              <ShoppingList listUrl={listUrl} listName={name} />
+            {data.data.map(({ name, listUrl, _id }) => (
+              <ShoppingList key={_id} listUrl={listUrl} listName={name} />
             ))}
           </div>
           <Footer />

@@ -61,11 +61,6 @@ const MainSection = () => {
     // TODO: add styling
     return notes.map(
       ({ body, quantity, isAvailable, isDiscarded }) => (
-        // <div className='flex justify-between bg-lime-400 mb-1'>
-        //   <p>{body}</p>
-        //   <p>{quantity}</p>
-        // </div>
-        // console.log(note)
         <ListItem
           name={body}
           quantity={quantity}

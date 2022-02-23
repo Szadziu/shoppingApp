@@ -15,6 +15,7 @@ const timeBetweenRefetch = ms('30s');
 // TODO: po zmianie listy zamykać drawer z menu pls
 
 const MainSection = () => {
+  const {setIsSideMenuVisible} = useContext(AppStateContext)
   const {setCurrentListId} = useContext(ListsStateContext)
   const params = useParams();
   // console.log(params);
@@ -29,7 +30,7 @@ const MainSection = () => {
 
   useEffect(() => {
   if(data){
-
+    setIsSideMenuVisible(false)
     setCurrentListId(data.data.list._id)
     refetch();
   }

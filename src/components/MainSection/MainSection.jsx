@@ -1,20 +1,24 @@
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import ms from 'ms';
 import List from 'components/generics/List';
 import StartScreen from 'components/StartScreen/StartScreen';
 import { getList } from './mainSection.utils';
 import { data } from 'autoprefixer';
 import ListItem from 'components/generics/ListItem';
+import { axiosClient } from 'utils/axios';
+import { AppStateContext } from 'contexts/AppState';
+import { ListsStateContext } from 'contexts/ListsState';
 
 const timeBetweenRefetch = ms('30s');
 // TODO: po zmianie listy zamykać drawer z menu pls
 
 const MainSection = () => {
+  const {setCurrentListId} = useContext(ListsStateContext)
   const params = useParams();
+  // console.log(params);
   const url = `list/${params.listUrl}`;
-
   const { data, isLoading, error, refetch } = useQuery(
     'getList',
     () => getList(url),
@@ -24,18 +28,28 @@ const MainSection = () => {
   );
 
   useEffect(() => {
+  if(data){
+
+    setCurrentListId(data.data.list._id)
     refetch();
+  }
+  
   }, [params]);
 
   if (isLoading || error) {
     // TODO: add error handling - screen to inform user that an error occured
     // add refetch button to try again
 
+    console.log('Oops error');
     // TODO: add some kind of loader indicator (spinner / skeleton) to make sure user is aware that data is being loaded
     return <h1>Dupa blada </h1>;
   }
-
   // TODO: refactor if its possible (optional)
+
+  if (data.data.list === null) console.log('something went wrong...');
+
+  console.log(data);
+
   const notesGroupedByType = data.data.list.notes.reduce(
     (acc, cur) => {
       const { isAvailable, isDiscarded } = cur;
@@ -45,6 +59,9 @@ const MainSection = () => {
     },
     { ['To buy']: [], ['Bought']: [], ['Missing']: [] }
   );
+
+ 
+
   // TODO: Add styling
   function renderLists() {
     return Object.entries(notesGroupedByType).map(([key, value]) => (
@@ -67,14 +84,14 @@ const MainSection = () => {
           toBuy={isAvailable}
           bought={isDiscarded}
         />
-      )
+      ) 
       // alternative solution
       // <Item {...note} />
     );
   }
 
   return (
-    <div className='mt-5'>
+    <div className='mt-5 bg-cyan-300'>
       {/* <List component={ReactComponent} data={[]} label="dasd"/> */}
 
       {/* TODO: add proper styling and tag */}

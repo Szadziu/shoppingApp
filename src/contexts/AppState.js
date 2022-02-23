@@ -1,15 +1,26 @@
 import { createContext, useState } from 'react';
+import { axiosClient } from 'utils/axios';
 
 export const AppStateContext = createContext();
 
 const AppState = ({ children }) => {
   const [isSideMenuVisible, setIsSideMenuVisible] = useState(false);
   const [isSettingsMenuVisible, setIsSettingsMenuVisible] = useState(false);
-  const [searcherValue, setSearcherValue] = useState('');
 
   const [listToBuy, setListToBuy] = useState([]);
   const [listOfBoughts, setListOfBoughts] = useState([]);
   const [listOfMiss, setListOfMiss] = useState([]);
+
+  const [currentItemValue, setCurrentItemValue] = useState('') 
+
+  const createNote = (idList) => {
+    return axiosClient.post(`note/create/${idList}`, {
+        data: {
+          body: currentItemValue,
+        },
+      })
+    ;
+  };
 
   return (
     <AppStateContext.Provider
@@ -19,15 +30,17 @@ const AppState = ({ children }) => {
         isSettingsMenuVisible,
         setIsSettingsMenuVisible,
 
-        searcherValue,
-        setSearcherValue,
-
         listToBuy,
         setListToBuy,
         listOfBoughts,
         setListOfBoughts,
         listOfMiss,
         setListOfMiss,
+
+        createNote,
+
+        currentItemValue,
+        setCurrentItemValue,
       }}
     >
       {children}

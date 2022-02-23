@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import ms from 'ms';
 import List from 'components/generics/List';
 import StartScreen from 'components/StartScreen/StartScreen';
@@ -13,14 +13,14 @@ import { ListsStateContext } from 'contexts/ListsState';
 
 const timeBetweenRefetch = ms('30s');
 // TODO: po zmianie listy zamykać drawer z menu pls
-
+// DONE
 const MainSection = () => {
+  const [isErrorHappened, setIsErrorHappened] = useState(false)
   const {setIsSideMenuVisible} = useContext(AppStateContext)
   const {setCurrentListId} = useContext(ListsStateContext)
   const params = useParams();
-  // console.log(params);
   const url = `list/${params.listUrl}`;
-  const { data, isLoading, error, refetch } = useQuery(
+  const { data, isLoading, isFetching, error, refetch } = useQuery(
     'getList',
     () => getList(url),
     {
@@ -36,14 +36,14 @@ const MainSection = () => {
   }
   
   }, [params]);
-
+  if(isFetching) return <h1>loading...</h1>
   if (isLoading || error) {
     // TODO: add error handling - screen to inform user that an error occured
-    // add refetch button to try again
 
-    console.log('Oops error');
+    // TODO: add refetch button to try again
+
     // TODO: add some kind of loader indicator (spinner / skeleton) to make sure user is aware that data is being loaded
-    return <h1>Dupa blada </h1>;
+    return <h1>Houston we have a problem...</h1>;
   }
   // TODO: refactor if its possible (optional)
 

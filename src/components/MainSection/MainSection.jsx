@@ -11,11 +11,15 @@ import { axiosClient } from 'utils/axios';
 import { AppStateContext } from 'contexts/AppState';
 import { ListsStateContext } from 'contexts/ListsState';
 
-const timeBetweenRefetch = ms('30s');
 // TODO: po zmianie listy zamykać drawer z menu pls
 // DONE
+// TODO: add error handling - screen to inform user that an error occured
+// TODO: add refetch button to try again
+// TODO: add some kind of loader indicator (spinner / skeleton) to make sure user is aware that data is being loaded
+
+
+const timeBetweenRefetch = ms('30s');
 const MainSection = () => {
-  const [isErrorHappened, setIsErrorHappened] = useState(false)
   const {setIsSideMenuVisible} = useContext(AppStateContext)
   const {setCurrentListId} = useContext(ListsStateContext)
   const params = useParams();
@@ -34,22 +38,13 @@ const MainSection = () => {
     setCurrentListId(data.data.list._id)
     refetch();
   }
-  
   }, [params]);
-  if(isFetching) return <h1>loading...</h1>
-  if (isLoading || error) {
-    // TODO: add error handling - screen to inform user that an error occured
-
-    // TODO: add refetch button to try again
-
-    // TODO: add some kind of loader indicator (spinner / skeleton) to make sure user is aware that data is being loaded
-    return <h1>Houston we have a problem...</h1>;
+  
+  if(isLoading || error) {
+    return <h1 className="flex justify-center items-center relative h-10 w-32 top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold tracking-wider bg-red-400 rounded text-white uppercase text-center">{`Error occured: ${error.message}`}</h1>
   }
+  if(isFetching) return <h1 className="flex justify-center items-center relative h-10 w-32 top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold tracking-wider bg-green-400 rounded text-white uppercase text-center">loading...</h1>
   // TODO: refactor if its possible (optional)
-
-  if (data.data.list === null) console.log('something went wrong...');
-
-  console.log(data);
 
   const notesGroupedByType = data.data.list.notes.reduce(
     (acc, cur) => {
@@ -86,14 +81,11 @@ const MainSection = () => {
           bought={isDiscarded}
         />
       ) 
-      // alternative solution
-      // <Item {...note} />
     );
   }
 
   return (
     <div className='mt-5 bg-cyan-300'>
-      {/* <List component={ReactComponent} data={[]} label="dasd"/> */}
 
       {/* TODO: add proper styling and tag */}
       {data.data.list.name}

@@ -4,6 +4,7 @@ import TopBar from './TopBar';
 import MenuTab from './MenuTab';
 import SettingsTab from './SettingsTab';
 import MainSection from './MainSection/MainSection';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 //! Example
 const Abc = () => <h1>Nie ma list</h1>;

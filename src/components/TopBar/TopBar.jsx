@@ -1,9 +1,9 @@
-import cn from 'classnames';
-import { useContext } from 'react';
-import { faBars, faCog, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import Button from 'components/generics/Button';
-import { AppStateContext } from 'contexts/AppState';
-import { ListsStateContext } from 'contexts/ListsState';
+import cn from "classnames";
+import { useContext } from "react";
+import { faBars, faCog, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import Button from "components/generics/Button";
+import { AppStateContext } from "contexts/AppState";
+import { ListsStateContext } from "contexts/ListsState";
 
 const TopBar = (isVisible) => {
   const {
@@ -11,13 +11,13 @@ const TopBar = (isVisible) => {
     setIsSettingsMenuVisible,
     currentItemValue,
     setCurrentItemValue,
-    createNote
+    createNote,
   } = useContext(AppStateContext);
 
-  const {currentListId} = useContext(ListsStateContext)
+  const { currentListId } = useContext(ListsStateContext);
 
-  const addButtonClassnames = cn('absolute right-0 bottom-0 mr-4 mb-4', {
-    ['grayscale']: !currentItemValue,
+  const addButtonClassnames = cn("bg-white rounded-full", {
+    ["grayscale"]: !currentItemValue,
   });
 
   // const a = {
@@ -26,7 +26,7 @@ const TopBar = (isVisible) => {
   // }
 
   const addItemToBuyList = () => {
-    createNote(currentListId)
+    createNote(currentListId);
   };
 
   function openSideMenu() {
@@ -43,18 +43,18 @@ const TopBar = (isVisible) => {
 
   return (
     <>
-      <div className='flex justify-between items-center shadow shadow-stone-500 bg-amber-500 w-full h-1/10 px-5'>
-        <Button icon={faBars} className='text-4xl' onClick={openSideMenu} />
-        <input type='text' value={currentItemValue} onChange={handleSearcher} />
-        <Button icon={faCog} className='text-4xl' onClick={openSettingsMenu} />
+      <div className="flex justify-between items-center shadow shadow-stone-500 bg-amber-500 w-full h-1/10 px-5">
+        <Button icon={faBars} className="text-4xl" onClick={openSideMenu} />
+        <input type="text" value={currentItemValue} onChange={handleSearcher} />
+        <Button
+          icon={faPlusCircle}
+          className={addButtonClassnames}
+          iconClassName="text-4xl text-green-400 border-4 border-white rounded-full"
+          onClick={addItemToBuyList}
+          disabled={!currentItemValue}
+        />
+        <Button icon={faCog} className="text-4xl" onClick={openSettingsMenu} />
       </div>
-      <Button
-        icon={faPlusCircle}
-        className={addButtonClassnames}
-        iconClassName='text-6xl text-green-500 '
-        onClick={addItemToBuyList}
-        disabled={!currentItemValue}
-      />
     </>
   );
 };

@@ -1,50 +1,51 @@
-import { AppStateContext } from 'contexts/AppState';
-import { useContext } from 'react';
-import ListItem from '../ListItem';
+import { AppStateContext } from "contexts/AppState";
+import { useContext } from "react";
+import ListItem from "../ListItem";
 
 const List = ({ type }) => {
   const { listToBuy, listOfMiss, listOfBoughts } = useContext(AppStateContext);
 
   const list = {
-    name: 'unknown',
+    name: "unknown",
     type: [],
     miss: false,
     bought: false,
   };
 
   switch (type) {
-    case 'buy':
-      list.name = 'To buy';
+    case "buy":
+      list.name = "To buy";
       list.type = listToBuy;
       break;
-    case 'bought':
-      list.name = 'Bought';
+    case "bought":
+      list.name = "Bought";
       list.type = listOfBoughts;
       list.bought = true;
       break;
-    case 'miss':
-      list.name = 'Miss items';
+    case "miss":
+      list.name = "Miss items";
       list.type = listOfMiss;
       list.miss = true;
       break;
   }
 
   const renderList = () => {
-    return list.type.map((item) => (
-      <ListItem
-        id={item.id}
-        miss={list.miss}
-        bought={list.bought}
-        name={item.name}
-
-        // {...item}
-      />
-    ));
+    return list.type.map(
+      (item) => console.log(item)
+      // <ListItem
+      //   // id={item.id}
+      //   // miss={list.miss}
+      //   // bought={list.bought}
+      //   // name={item.name}
+      //   {...item}
+      //   // {...item}
+      // />
+    );
   };
-
+  //! nigdzie nie uzywany komponent
   return (
-    <div className='w-full flex flex-col gap-2'>
-      <label className='bg-gray-600 text-white pl-2'>{list.name}</label>
+    <div className="w-full flex flex-col gap-2">
+      <label className="bg-red-600 text-white pl-2">{list.name}</label>
       <ul>{renderList()}</ul>
     </div>
   );

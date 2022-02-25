@@ -19,12 +19,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { TailSpin } from "react-loader-spinner";
 
 // TODO: po zmianie listy zamykać drawer z menu pls
-// I have done
-
 // TODO: add error handling - screen to inform user that an error occured
 // TODO: add refetch button to try again
 // TODO: add some kind of loader indicator (spinner / skeleton) to make sure user is aware that data is being loaded
-// I'm working on it
+// I have done
 
 const timeBetweenRefetch = ms("30s");
 const MainSection = () => {
@@ -35,7 +33,7 @@ const MainSection = () => {
   const fakeUrl = "dupa";
   const { data, isLoading, isFetching, error, refetch } = useQuery(
     "getList",
-    () => getList(fakeUrl),
+    () => getList(url),
     {
       refetchInterval: timeBetweenRefetch,
       onError: console.log("i co dalej... ?"),
@@ -74,18 +72,21 @@ const MainSection = () => {
       </h1>
     );
   // TODO: refactor if its possible (optional)
+  // I'm working on it
 
   const notesGroupedByType = data.data.list.notes.reduce(
     (acc, cur) => {
       const { isAvailable, isDiscarded } = cur;
-      if (isAvailable) return { ...acc, ["To buy"]: [...acc["To buy"], cur] };
       if (isDiscarded) return { ...acc, ["Bought"]: [...acc["Bought"], cur] };
+      else if (isAvailable)
+        return { ...acc, ["To buy"]: [...acc["To buy"], cur] };
       else return { ...acc, ["Missing"]: [...acc["Missing"], cur] };
     },
     { ["To buy"]: [], ["Bought"]: [], ["Missing"]: [] }
   );
 
   // TODO: Add styling
+  // I have done this at the moment
   function renderLists() {
     return Object.entries(notesGroupedByType).map(([key, value]) => (
       <>
@@ -99,20 +100,20 @@ const MainSection = () => {
 
   function renderList(notes) {
     // TODO: add styling
-    return notes.map(({ body, quantity, isAvailable, isDiscarded }) => (
-      <ListItem
-        name={body}
-        quantity={quantity}
-        toBuy={isAvailable}
-        bought={isDiscarded}
-      />
-    ));
+    // I have done this at the moment
+    return notes.map((product) => {
+      console.log(product);
+      return <ListItem {...product} />;
+    });
   }
 
   return (
-    <div className="mt-5 bg-cyan-300">
+    <div className="mt-5">
       {/* TODO: add proper styling and tag */}
-      {data.data.list.name}
+      <h3 className="p-2 uppercase font-bold tracking-wider">
+        List:
+        {data.data.list.name}
+      </h3>
       {renderLists()}
     </div>
   );

@@ -6,6 +6,10 @@ import SettingsTab from './SettingsTab';
 import MainSection from './MainSection/MainSection';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
+//TODO list
+// I need an API endpoint for remove notes
+
+
 //! Example
 const Abc = () => <h1>Nie ma list</h1>;
 

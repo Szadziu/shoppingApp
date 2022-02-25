@@ -22,6 +22,15 @@ const AppState = ({ children }) => {
     ;
   };
 
+  const modifyNote = (idList) => {
+    return axiosClient.post(`note/create/${idList}`, {
+      data: {
+        body: currentItemValue,
+        isDiscarded: true,
+      },
+    })
+  }
+
   return (
     <AppStateContext.Provider
       value={{
@@ -38,6 +47,7 @@ const AppState = ({ children }) => {
         setListOfMiss,
 
         createNote,
+        modifyNote,
 
         currentItemValue,
         setCurrentItemValue,

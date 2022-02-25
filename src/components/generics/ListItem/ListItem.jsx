@@ -9,10 +9,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cn from "classnames";
 import Button from "../Button";
 import { AnimatePresence, motion } from "framer-motion";
+import { ListsStateContext } from "contexts/ListsState";
 
 //! Refactor pls
 
 const ListItem = ({ _id, body, isDiscarded, isAvailable }) => {
+  const { modifyNote } = useContext(AppStateContext);
+  const { currentListId } = useContext(ListsStateContext);
+
   const productClassname = cn("w-4/5", {
     ["line-through"]: isDiscarded,
     ["text-red-500"]: !isAvailable,
@@ -26,7 +30,11 @@ const ListItem = ({ _id, body, isDiscarded, isAvailable }) => {
         transition={{ type: "spring", stiffness: 200 }}
         key={_id}
       >
-        <FontAwesomeIcon icon={faCartArrowDown} className="text-green-500" />
+        <FontAwesomeIcon
+          icon={faCartArrowDown}
+          className="text-green-500 cursor-pointer"
+          onClick={() => modifyNote(currentListId)}
+        />
         <p className={productClassname}>{body}</p>
         <FontAwesomeIcon icon={faReply} className="text-red-400" />
         <Button icon={faPlus} />

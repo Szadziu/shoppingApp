@@ -2,7 +2,6 @@ import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { useEffect, useContext, useState } from "react";
 import ms from "ms";
-import List from "components/generics/List";
 import StartScreen from "components/StartScreen/StartScreen";
 import { getList } from "./mainSection.utils";
 import { data } from "autoprefixer";

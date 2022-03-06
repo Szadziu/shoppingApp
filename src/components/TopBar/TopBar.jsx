@@ -4,6 +4,8 @@ import { faBars, faCog, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import Button from "components/generics/Button";
 import { AppStateContext } from "contexts/AppState";
 import { ListsStateContext } from "contexts/ListsState";
+import { useParams } from "react-router";
+import { getList } from "components/MainSection/mainSection.utils";
 
 const TopBar = (isVisible) => {
   const {
@@ -14,19 +16,20 @@ const TopBar = (isVisible) => {
     createNote,
   } = useContext(AppStateContext);
 
+  const params = useParams();
+  const url = `list/${params.listUrl}`;
+
   const { currentListId } = useContext(ListsStateContext);
+  console.log(currentListId);
 
   const addButtonClassnames = cn("bg-white rounded-full", {
     ["grayscale"]: !currentItemValue,
   });
 
-  // const a = {
-  //     ...(isVisible ? {name: "Alicja"}: {}),
-  //     ...(isVisible && coś innego ? {age: 30}: {}),
-  // }
-
   const addItemToBuyList = () => {
     createNote(currentListId);
+    setCurrentItemValue("");
+    getList(url);
   };
 
   function openSideMenu() {

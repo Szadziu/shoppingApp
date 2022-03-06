@@ -23,6 +23,8 @@ import { TailSpin } from "react-loader-spinner";
 // TODO: add some kind of loader indicator (spinner / skeleton) to make sure user is aware that data is being loaded
 // I have done
 
+// w celu odswiezenia list wykonywac refetch po kazdym dodaniu przedmiotu
+
 const timeBetweenRefetch = ms("30s");
 const MainSection = () => {
   const { setIsSideMenuVisible } = useContext(AppStateContext);
@@ -35,15 +37,15 @@ const MainSection = () => {
     () => getList(url),
     {
       refetchInterval: timeBetweenRefetch,
-      onError: console.log("i co dalej... ?"),
     }
   );
 
   useEffect(() => {
     setIsSideMenuVisible(false);
     if (data) {
-      setCurrentListId(data.data.list._id);
-      refetch();
+      refetch().then((response) => {
+        setCurrentListId(response.data.data.list._id);
+      });
     }
   }, [params]);
 
@@ -76,12 +78,11 @@ const MainSection = () => {
   const notesGroupedByType = data.data.list.notes.reduce(
     (acc, cur) => {
       const { isAvailable, isDiscarded } = cur;
-      if (isDiscarded) return { ...acc, ["Bought"]: [...acc["Bought"], cur] };
-      else if (isAvailable)
-        return { ...acc, ["To buy"]: [...acc["To buy"], cur] };
-      else return { ...acc, ["Missing"]: [...acc["Missing"], cur] };
+      if (isDiscarded) return { ...acc, bought: [...acc.bought, cur] };
+      else if (isAvailable) return { ...acc, to_buy: [...acc.to_buy, cur] };
+      else return { ...acc, missing: [...acc.missing, cur] };
     },
-    { ["To buy"]: [], ["Bought"]: [], ["Missing"]: [] }
+    { to_buy: [], bought: [], missing: [] }
   );
 
   // TODO: Add styling
@@ -89,8 +90,8 @@ const MainSection = () => {
   function renderLists() {
     return Object.entries(notesGroupedByType).map(([key, value]) => (
       <>
-        <h3 className="font-bold text-xl bg-orange-500 text-center text-white py-1 border-orange-900 border-solid border-y-2 mb-2">
-          {key}
+        <h3 className="font-bold text-xl bg-orange-500 text-center text-white py-1 border-orange-900 border-solid border-y-2 mb-2 capitalize">
+          {key.replace("_", " ")}
         </h3>
         <ul>{renderList(value)}</ul>
       </>

@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { QueryClientProvider, QueryClient } from 'react-query';
+import { QueryClientProvider, QueryClient, QueryCache } from 'react-query';
 import App from './components/App';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import AppState from './contexts/AppState';
 import ListsStateContext from 'contexts/ListsState';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  queryCache: new QueryCache()
+});
 
 ReactDOM.render(
   <React.StrictMode>

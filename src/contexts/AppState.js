@@ -32,19 +32,25 @@ const AppState = ({ children }) => {
     ;
   };
 
-  const editNote = (noteId) => {
+  const editNote = async (noteId) => {
     console.log(noteId);
-    return axiosClient.post(`note/edit/${noteId}`, {
-      data: {
-        isDiscarded: true,
+    axiosClient.post(`note/edit/${noteId}`, {
         quantity: 2,
-      },
     })
+
+    console.log(test)
   }
   const deleteNote = (noteId) => {
     console.log(`Note id ${noteId} was deleted`);
-    return axiosClient.post(`note/delete/${noteId}`);
+    return axiosClient.post(`note/delete/${noteId}`, {
+      data:{
+        id: noteId,
+      }
+    });
   }
+
+  // /api/note/delete/:listId POST
+  // { id: string | Array<string> }
 
   return (
     <AppStateContext.Provider

@@ -5,7 +5,9 @@ import {
   faReply,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
+import { axiosClient } from "utils/axios";
 import { useContext } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import { AppStateContext } from "contexts/AppState";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cn from "classnames";
@@ -18,6 +20,22 @@ import { ListsStateContext } from "contexts/ListsState";
 const ListItem = ({ _id, body, isDiscarded, isAvailable, quantity }) => {
   const { editNote, deleteNote } = useContext(AppStateContext);
   const { currentListId } = useContext(ListsStateContext);
+  const { mutate } = useMutation(() => {
+    axiosClient.post(`/note/edit/621664b95f784eb3d803c2e8`);
+  });
+  const { invalidateQueries } = useQueryClient();
+
+  const test = () =>
+    mutate(
+      { quantity: 1000 },
+      {
+        onSuccess: () => {
+          invalidateQueries("getList");
+        },
+      }
+    );
+
+  console.log(_id);
 
   const productClassname = cn("w-4/5", {
     ["line-through"]: isDiscarded,
@@ -35,7 +53,8 @@ const ListItem = ({ _id, body, isDiscarded, isAvailable, quantity }) => {
         <FontAwesomeIcon
           icon={faCartArrowDown}
           className="text-green-500 cursor-pointer"
-          onClick={() => editNote(_id)}
+          // onClick={() => editNote(_id)}
+          onClick={test}
         />
         <p className={productClassname}>{body}</p>
         <FontAwesomeIcon icon={faReply} className="text-orange-400" />
